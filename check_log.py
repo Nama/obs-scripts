@@ -83,7 +83,7 @@ def check_log(settings):
         log_file = '1debug.txt'
     l = open(log_dir + log_file, 'r')
     log = l.read()
-    l.close
+    l.close()
 
     if search_string in log:
         text = 'Log has error'
