@@ -3,6 +3,7 @@ import obspython as obs
 from asyncio import run
 
 debug = False
+source = ''
 source_name = ''
 script_settings = ''
 
@@ -25,10 +26,10 @@ def script_properties():
     props_list = obs.obs_properties_add_list(props, 'source', 'Text Source', obs.OBS_COMBO_TYPE_LIST, obs.OBS_COMBO_FORMAT_STRING)
     sources = obs.obs_enum_sources()
     if sources:
-        for source in sources:
-            source_id = obs.obs_source_get_unversioned_id(source)
+        for src in sources:
+            source_id = obs.obs_source_get_unversioned_id(src)
             if source_id == 'text_gdiplus' or source_id == 'text_ft2_source':
-                name = obs.obs_source_get_name(source)
+                name = obs.obs_source_get_name(src)
                 obs.obs_property_list_add_string(props_list, name, name)
     obs.source_list_release(sources)
     return props
@@ -54,7 +55,6 @@ def script_unload():
     Called when unloading the script
     """
     update_text('Unloaded!')
-    obs.obs_data_release(script_settings)
     obs.obs_source_release(source)
 
 
@@ -89,10 +89,10 @@ async def speed_check():
     if debug:
         # rate limits :)
         from random import randrange
-        return (randrange(10000000, 100000000) / 1048576, randrange(0, 100))
+        return randrange(10000000, 100000000) / 1048576, randrange(0, 100)
     s = speedtest.Speedtest()
     s.upload(threads=threads)
-    return (s.results.upload / 1048576, s.results.ping)
+    return s.results.upload / 1048576, s.results.ping
 
 
 def update_text(speed):
@@ -101,6 +101,7 @@ def update_text(speed):
         text = f'Upload: {int(speed[0])}\nPing: {speed[1]}'
     else:
         text = speed
+    global source
     source = obs.obs_get_source_by_name(source_name)
     if source:
         obs.obs_data_set_string(script_settings, 'text', text)

@@ -1,5 +1,4 @@
 import os
-import sys
 import obspython as obs
 
 debug = False
@@ -62,7 +61,6 @@ def script_unload():
     Called when unloading the script
     """
     update_text('Unloaded!')
-    obs.obs_data_release(script_settings)
 
 
 def event_handler(event):
