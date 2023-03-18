@@ -55,7 +55,6 @@ def script_unload():
     Called when unloading the script
     """
     update_text('Unloaded!')
-    obs.obs_source_release(source)
 
 
 def script_update(settings):
@@ -106,3 +105,4 @@ def update_text(speed):
     if source:
         obs.obs_data_set_string(script_settings, 'text', text)
         obs.obs_source_update(source, script_settings)
+        obs.obs_source_release(source)
