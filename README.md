@@ -2,9 +2,6 @@
 * [Speedtest](#speedtest)
 * [Check Log](#check-log)
 
-## General info
-OBS seems to crash a lot if you reload scripts. Even if your scripts run fine(?). Try to reload, if it crashes, test your script with restarting OBS.
-
 ## Scripts
 ### Speedtest
 Makes a speedtest upon starting OBS or changing the scene to make sure your internet connection is fine before you start your stream.
